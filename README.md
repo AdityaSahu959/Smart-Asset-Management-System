@@ -1,159 +1,127 @@
 # Smart Asset Management System
 
-An academic asset and maintenance application for institutional laboratories. Staff can identify equipment by QR code, record faults, assign technicians, document repairs, and have managers verify completion. The system preserves maintenance history and supports inventory exports. AI provides optional suggestions; people control priorities, repairs, verification, and retirement.
+An academic asset and maintenance management platform for institutional laboratories. Staff can identify equipment via QR code, report faults, assign technicians, document repairs, and have managers verify completion. The system preserves full maintenance history, supports inventory exports (PDF/Excel), enforces tamper-evident audit logging, and provides optional CPU-based AI triage and historical repair recommendations while keeping humans in control of priorities, repairs, verification, and retirement.
 
-## What runs where
+---
 
-| Component | Technology | Local address |
-| --- | --- | --- |
-| Browser interface | React 19 / Vite 8 | http://127.0.0.1:5173 |
-| Application backend | Node.js / Express 5 / mysql2 | http://127.0.0.1:5000 |
-| Database | MariaDB 11.4.13, MySQL-compatible | 127.0.0.1:3308 |
-| Optional AI worker | Python / FastAPI / PyTorch CPU | http://127.0.0.1:8000 |
+## Architecture Overview
 
-Express owns authentication, authorization, validation, transactions, audit logging and all database writes. Python handles inference only. XAMPP is not required for this isolated portable setup. A MySQL-compatible client library does not mean two databases are running.
+| Component | Technology | Local Address |
+| :--- | :--- | :--- |
+| **Browser Interface** | React 19 / Vite 8 | `http://127.0.0.1:5173` |
+| **Application Backend** | Node.js / Express 5 / `mysql2` | `http://127.0.0.1:5000` |
+| **Database** | MariaDB 11.4.13 (MySQL-compatible) | `127.0.0.1:3308` |
+| **Optional AI Worker** | Python / FastAPI / PyTorch (CPU) | `http://127.0.0.1:8000` |
 
-## Existing configured computer
+* **Express** owns authentication, authorization, validation, database transactions, audit logging, and all writes.
+* **Python / FastAPI** handles stateless NLP inference and embedding generation only.
 
-From PowerShell in this repository:
+---
+
+## Quick Start (Configured Machine)
+
+Start all local services (database, backend, frontend, and AI worker) from PowerShell in the repository root:
 
 ```powershell
 .\scripts\start-local.ps1
 ```
 
-Open http://127.0.0.1:5173 . Model readiness can take longer than web startup. To run without starting the worker, use `-SkipAI`; the application supports manual triage. This switch does not stop an already running worker.
+Open **`http://127.0.0.1:5173`**. Initial AI model readiness can take slightly longer than web startup; if the worker is still loading or skipped (`.\scripts\start-local.ps1 -SkipAI`), the application seamlessly falls back to manual triage.
 
-The startup script uses ignored `scripts/local.config.json`, verifies the database directory, port, and all reviewed migration checksums, and starts hidden local processes. It never initializes a database or applies SQL automatically. Logs are under the private database directory's `logs` folder.
-
-To stop only this configured project's processes and gracefully stop its database:
+To stop only this project's processes and gracefully shut down its database:
 
 ```powershell
 .\scripts\stop-local.ps1
 ```
 
-Local Super Admin email is `admin@smartassets.local`. Open the private credential file locally; do not paste its contents into chat or commit it:
+### Local Administrator Credentials
+The default local Super Admin email is `admin@smartassets.local`. View your local private credentials without committing them:
 
 ```powershell
 $localSetup = Get-Content .\scripts\local.config.json -Raw | ConvertFrom-Json
 notepad (Join-Path $localSetup.dataDir 'local-credentials.json')
 ```
 
-Use only `adminEmail` and `adminPassword` to sign in. That file also contains database credentials. The private runtime/data/model-cache directories are outside the repository. Preserve them when moving or backing up this computer; the source archive deliberately excludes them.
+---
 
-## Using the application
+## Roles & Core Workflows
 
-1. Sign in as the local administrator. Create a lab, a category, and an asset with purchase/warranty details if known.
-2. New registrations receive Viewer access. A Super Admin can activate/deactivate accounts and assign roles in User Access. Role changes invalidate old sessions.
-3. Administrators and technicians can report a fault. Keep the synthetic/test checkbox enabled for demonstrations and evaluation fixtures.
-4. A manager assigns an active Technician. That technician progresses the ticket and supplies a resolution. A manager verifies and closes it.
-5. Asset history, QR labels, PDF and Excel exports support inventory work. Retire assets to preserve repair history.
-6. Audit shows recorded mutations and verifies the hash chain. Export a checkpoint and keep a trusted copy outside the database.
+### Role-Based Access Control (RBAC)
+Backend middleware enforces permissions independently of UI controls, and role changes immediately invalidate active sessions. The last active Super Admin cannot be disabled or demoted.
 
-| Role | Main permissions |
-| --- | --- |
-| Viewer | Read inventory and maintenance history |
-| Technician | Report faults; progress and resolve own assigned tickets |
-| Admin | Manage inventory/categories; assign, verify and close repairs; view audit |
-| Super Admin | Admin permissions plus user access management |
+| Role | Permissions |
+| :--- | :--- |
+| **Viewer** | Read inventory, asset details, and maintenance history (default for new registrations) |
+| **Technician** | Report faults; progress and resolve assigned maintenance tickets |
+| **Admin** | Manage labs, categories, and assets; assign, verify, and close repairs; view audit logs |
+| **Super Admin** | Full Admin permissions plus user activation, deactivation, and role assignment |
 
-The backend enforces permissions independently of hidden UI controls. The last active Super Admin cannot be disabled or demoted.
+### End-to-End Lifecycle
+1. **Inventory & QR Labels:** Admins create labs, categories, and assets with purchase/warranty details and generate printable QR labels. Retiring an asset preserves its historical repair record.
+2. **Fault Reporting & AI Triage:** Technicians or Admins log faults. When enabled, the AI worker suggests a fault category and priority while preserving human override.
+3. **Assignment & Verification:** An Admin assigns an active Technician, who progresses the ticket and logs a resolution summary. An Admin verifies and closes the ticket.
+4. **Exports & Auditing:** Export inventory reports to PDF or Excel, and inspect or export checkpoints from the cryptographic audit log.
 
-## Implemented and checked
+---
 
-- Strong required JWT secret; signed, expiring sessions with current database role/active-state checks; bcrypt passwords; no public privilege selection.
-- Expiring, hashed, single-use reset tokens with session revocation. Real email delivery requires SMTP; the local recovery tests use a test mailer.
-- Validated lab/asset/category management, purchase/warranty/custodian fields, maintenance lifecycle and retention, Unicode database round trips.
-- Transactional audit hash chain, checkpoint verification, concurrent appends and rollback-only tamper detection.
-- Optional authenticated AI worker, timeout/circuit breaker, manual fallback, triage metadata and versioned normalized embeddings.
-- Retrieval from eligible real, human-verified Closed repairs only; stale, synthetic, unverified and reopened cases are excluded. No fabricated historical matches or SOPs.
-- Rule-based reliability indicator and explicitly labelled calendar-age-per-failure proxy.
-- Browser workflow covering permissions, role-change session invalidation, asset forms, technician resolution, manager closure, audit and downloads.
+## Security, AI & Reliability Design
 
-See `docs/IMPLEMENTATION_STATUS.md` for evidence and limitations and `docs/SCHEMA_API_MAP.md` for contracts. Historical handover observations are not proof of the current schema.
+* **Authentication & Sessions:** Strong required JWT secret, expiring signed tokens checked against live database role/active status, `bcrypt` password hashing, and single-use expiring password reset tokens.
+* **Tamper-Evident Audit Chain:** Business mutations and SHA-256 hash-chain appends commit inside the same database transaction, supporting checkpoint exports and rollback tamper detection.
+* **Pinned CPU Models & Guardrails:**
+  * **Zero-Shot Triage:** `valhalla/distilbart-mnli-12-3` (`ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b`) across 5 IT/lab fault categories with confidence abstention and conservative safety-keyword escalation.
+  * **Historical Repair Retrieval:** `sentence-transformers/all-MiniLM-L6-v2` (`1110a243fdf4706b3f48f1d95db1a4f5529b4d41`, 384 dimensions) indexing only verified, closed, real repairs.
+  * **Resilience:** Authenticated loopback communication (`X-AI-Key`), request timeouts, and an automatic circuit breaker that degrades gracefully to manual review.
+* **Asset Reliability Indicator (ARI):** Deterministic health score (`0–100`) combining an age penalty (capped at 35 over 1,825 days) and time-decayed, priority-weighted verified failure incidents over a 180-day window ($\exp(-0.02 \times \text{days})$), alongside a calendar-age-per-failure MTBF proxy.
 
-## AI evidence and limits
+*(See `docs/IMPLEMENTATION_STATUS.md` and `docs/SCHEMA_API_MAP.md` for detailed evaluation benchmarks, schema contracts, and deployment considerations.)*
 
-Pinned CPU models:
+---
 
-- `valhalla/distilbart-mnli-12-3` at `ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b`.
-- `sentence-transformers/all-MiniLM-L6-v2` at `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`, 384 dimensions.
+## Verification & Automated Tests
 
-The development evaluation contains 20 labelled and four ambiguous synthetic English descriptions. After revising category descriptions and abstention handling, 18/20 labelled cases were correct with abstentions counted incorrect; ten synthetic retrieval queries found their expected top result. Warm HTTP median was about 561 ms and p95 593 ms on this computer. Baseline and revised reports are in `docs/evaluation-baseline.json` and `docs/evaluation-v2.json`.
-
-The same development set informed those revisions. These are not independent test results, human-reviewed institutional validation, or evidence of multilingual accuracy. Actual first model download/load took about 55 seconds; a later cached evaluation load took about 2.3 seconds. AI confidence does not overwrite human priority. Safety-keyword handling is a conservative policy, not a diagnosis.
-
-No vetted SOP collection was supplied. Missing historical results or unavailable models lead to manual review. Retrieval currently examines up to 200 recent eligible embeddings. Retry is available, but there is no durable background job queue. Real repair data and independent evaluation are outstanding.
-
-## Reliability and audit meaning
-
-ARI uses age penalty capped at 35 over 1,825 days plus decayed priority-weighted failures in a 180-day window; priority weights are 15/10/5/2, decay is exp(-0.02 * days), and the result is clamped to 0..100. Only real, verified Closed Failure tickets with a resolution count. A score below 40 suggests human replacement review; it does not retire equipment. Missing or invalid dates can make the score unavailable. The displayed MTBF proxy is calendar age divided by verified failures, not measured uptime.
-
-The audit chain detects inconsistent changes against retained chain state and trusted checkpoints. A privileged attacker who can rewrite the entire database and replace all checkpoints can defeat a database-only chain. It is tamper-evident, not immutable or externally notarized. Backfilled historical events preserve original values but cannot prove integrity before the backfill. Business mutations and audit append commit together. Login/read events are not comprehensively logged.
-
-## Verification commands
-
-Read-only checks and unit tests:
+Run read-only security checks and unit/build tests across all three services:
 
 ```powershell
+# Repository & secret hygiene checks
 node .\scripts\check-local.js
 node .\scripts\check-source-secrets.js
-Push-Location server
-npm test
-npm audit
-Pop-Location
-Push-Location client
-npm run lint
-npm run build
-npm audit
-Pop-Location
-Push-Location ai_service
-.\.venv\Scripts\python.exe -m pytest tests -q
-.\.venv\Scripts\python.exe -m pip check
-Pop-Location
+
+# Backend tests
+Push-Location server; npm test; Pop-Location
+
+# Frontend lint & production build
+Push-Location client; npm run lint; npm run build; Pop-Location
+
+# AI worker unit tests
+Push-Location ai_service; .\.venv\Scripts\python.exe -m pytest tests -q; Pop-Location
 ```
 
-The integration scripts under `server/scripts/verify-*-local.js` require explicit fixture opt-in and write labelled synthetic records. Read them before rerunning; they are not read-only health checks. The browser test also creates labelled local fixtures, uses installed Chrome, and reads credentials privately:
+### End-to-End Browser QA
+Integration scripts under `server/scripts/verify-*-local.js` and Playwright E2E tests require explicit local fixture opt-in:
 
 ```powershell
 $localSetup = Get-Content .\scripts\local.config.json -Raw | ConvertFrom-Json
 $env:ALLOW_LOCAL_FIXTURES = '1'
 $env:LOCAL_DATA_DIR = $localSetup.dataDir
-Push-Location client
-npm run test:e2e
-Pop-Location
-Remove-Item Env:ALLOW_LOCAL_FIXTURES,Env:LOCAL_DATA_DIR
+Push-Location client; npm run test:e2e; Pop-Location
+Remove-Item Env:ALLOW_LOCAL_FIXTURES, Env:LOCAL_DATA_DIR
 ```
 
-Keep test artifacts private. Browser tests disable traces and clear password inputs on failure. A process-local public-auth rate limiter may reject repeated tests until its window expires; this is not a production distributed rate limiter.
+---
 
-## Fresh computer: review before provisioning
+## Fresh Machine Provisioning
 
-Do not rerun setup on the already configured computer. Source archives contain no database, secrets, installed dependencies, model weights or Python virtual environment. Requirements: compatible Node/npm, Python 3.13, installed Chrome for browser QA, and the official portable MariaDB Windows runtime. The verified runtime here was 11.4.13, ZIP SHA-256 `d62986d433eeebfde218560b276103831604a61e929e87f1a17f5aebbd80257e2`.
+Source archives deliberately exclude databases, secrets, installed dependencies, model weights, and virtual environments.
 
-Install JavaScript dependencies with `npm ci` in `server` and `client`. Create `ai_service/.venv` and install `ai_service/requirements.lock.txt` (or requirements-dev.txt for tests). CPU PyTorch uses its official extra index; model downloads require network access on first run. The checked-in environment examples contain no usable secrets.
-
-Read the complete safe bootstrap and migrations, check the intended port and database state, and obtain approval before executing any SQL. `server/scripts/setup-local.js --approved --runtime <absolute-runtime-dir> --data <new-absolute-data-dir>` creates a NEW isolated instance on port 3308, refuses existing data/configuration, and provisions restricted app and local administrator accounts. Its reviewed bootstrap checksum is pinned in code. Never execute the original `SQL File (1).sql` or backup as an installation shortcut: they contain destructive historical SQL.
-
-After approved bootstrap, use `server/scripts/migrate-local.js` with `--file`, `--sha256`, `--runtime`, `--data`, and `--approved`, in order:
-
-| File under server/migrations | Reviewed SHA-256 |
-| --- | --- |
-| 001_identity_and_maintenance.sql | db3d52902fa9f7d2d87f5a02e1b3699bbff55dc625f0aed8f0f2948c44543837 |
-| 002_audit_chain.sql | 119ce958fbc03f17d90a30b769f966666e5da4f6793d0043ba73aa2428917792 |
-| 003_ai_metadata_and_embeddings.sql | 4ba6e8a1e9226511fb42bb5005617744f49e0164b5d9a69186412bb5bc3b1f7c |
-
-The runner checks the exact isolated instance and a nonempty private logical backup before DDL. DDL is not fully transactional: an error can leave a partial migration. Preserve and inspect that state; do not drop/recreate it. Backup restore has not been tested. These migrations target the inspected safe-bootstrap schema; a teammate's older schema must be reconciled separately.
-
-For optional AI, after local setup run `node server/scripts/configure-ai-local.js` to generate a shared strong key in ignored local configuration. It refuses existing AI configuration. The initial setup/migrations were exercised here; this new-computer convenience configuration path was statically checked, not exercised over existing files.
-
-SMTP is intentionally unconfigured. Configure the ignored server environment using `.env.example`, verified TLS SMTP credentials and an appropriate HTTPS public application URL before testing real recovery delivery. Do not add insecure JWT/AI fallback keys.
-
-## Remaining work before institutional deployment
-
-- Collect real, consented repair cases and vetted SOPs; conduct independent human-reviewed AI/retrieval evaluation and tune thresholds on separate data.
-- Configure and verify real SMTP delivery; test backup restoration in a separate approved isolated environment.
-- Choose hosting, HTTPS, managed secrets, external checkpoint custody, monitoring, a durable AI queue and shared rate limiting for multiple API processes.
-- Review pagination/scale and split the large export-related frontend bundle. Current build passes with a chunk-size warning.
-- English PDF/QR/Excel exports were checked. Unicode database support does not establish multilingual PDF font support.
-
-No deployment, Git commit or push was performed as part of the local implementation. Preserve the original SQL and backup. Never modify unrelated `taskflow_db`, `test`, or `testdb` databases.
+1. **Prerequisites:** Node.js/npm, Python 3.13, Google Chrome (for E2E tests), and the portable MariaDB 11.4.13 Windows runtime.
+2. **Install Dependencies:** Run `npm ci` in both `server/` and `client/`. Create `ai_service/.venv` and install `ai_service/requirements.lock.txt`.
+3. **Bootstrap & Migrate Database:**
+   ```powershell
+   node server/scripts/setup-local.js --approved --runtime <absolute-runtime-dir> --data <new-absolute-data-dir>
+   ```
+   Apply migrations in order using `server/scripts/migrate-local.js` (`001_identity_and_maintenance.sql`, `002_audit_chain.sql`, `003_ai_metadata_and_embeddings.sql`) with their reviewed SHA-256 checksums.
+4. **Configure Local AI Keys:**
+   ```powershell
+   node server/scripts/configure-ai-local.js
+   ```
