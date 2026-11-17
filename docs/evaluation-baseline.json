@@ -1,0 +1,862 @@
+{
+  "evaluation_type": "Synthetic prototype evaluation; NOT a human-reviewed institutional validation",
+  "human_reviewed": false,
+  "database_rows_inserted": 0,
+  "machine": {
+    "python": "3.13.1",
+    "os": "Windows",
+    "logical_processors": 28,
+    "total_ram_gb": 31.7
+  },
+  "worker": {
+    "ready": true,
+    "triage_model": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "dimensions": 384,
+    "load_seconds": 2.307313299999805,
+    "quantization": "none"
+  },
+  "process_rss_mb": 1509.88,
+  "classification": {
+    "labelled_cases": 20,
+    "ambiguous_cases": 4,
+    "accuracy_with_abstentions_counted_incorrect": 0.45,
+    "manual_review_rate_all_cases": 0.625,
+    "first_observed_http_latency_ms": 630.8997999985877,
+    "warm_http_median_ms": 497.13250000058906,
+    "warm_http_p95_ms": 535.5706999980612,
+    "per_class": {
+      "Hardware Fault": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "support": 4
+      },
+      "OS and Software Crash": {
+        "precision": 0,
+        "recall": 0.0,
+        "f1": 0,
+        "support": 4
+      },
+      "Network and DHCP Connectivity": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 4
+      },
+      "Peripheral Defect": {
+        "precision": 0,
+        "recall": 0.0,
+        "f1": 0,
+        "support": 4
+      },
+      "Power Infrastructure": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "support": 4
+      }
+    },
+    "confusion_matrix": {
+      "Hardware Fault": {
+        "Hardware Fault": 2,
+        "OS and Software Crash": 0,
+        "Network and DHCP Connectivity": 0,
+        "Peripheral Defect": 0,
+        "Power Infrastructure": 0,
+        "Manual": 2
+      },
+      "OS and Software Crash": {
+        "Hardware Fault": 0,
+        "OS and Software Crash": 0,
+        "Network and DHCP Connectivity": 0,
+        "Peripheral Defect": 0,
+        "Power Infrastructure": 0,
+        "Manual": 4
+      },
+      "Network and DHCP Connectivity": {
+        "Hardware Fault": 0,
+        "OS and Software Crash": 0,
+        "Network and DHCP Connectivity": 4,
+        "Peripheral Defect": 0,
+        "Power Infrastructure": 0,
+        "Manual": 0
+      },
+      "Peripheral Defect": {
+        "Hardware Fault": 0,
+        "OS and Software Crash": 0,
+        "Network and DHCP Connectivity": 0,
+        "Peripheral Defect": 0,
+        "Power Infrastructure": 0,
+        "Manual": 4
+      },
+      "Power Infrastructure": {
+        "Hardware Fault": 0,
+        "OS and Software Crash": 0,
+        "Network and DHCP Connectivity": 0,
+        "Peripheral Defect": 0,
+        "Power Infrastructure": 3,
+        "Manual": 1
+      }
+    },
+    "threshold_sweep": [
+      {
+        "threshold": 0.4,
+        "coverage": 0.55,
+        "accuracy_among_accepted": 0.9090909090909091
+      },
+      {
+        "threshold": 0.5,
+        "coverage": 0.45,
+        "accuracy_among_accepted": 1.0
+      },
+      {
+        "threshold": 0.6,
+        "coverage": 0.25,
+        "accuracy_among_accepted": 1.0
+      },
+      {
+        "threshold": 0.7,
+        "coverage": 0.25,
+        "accuracy_among_accepted": 1.0
+      }
+    ]
+  },
+  "retrieval": {
+    "queries": 10,
+    "hit_at_1": 1.0,
+    "hit_at_3": 1.0,
+    "cases": [
+      {
+        "description": "The PC cannot see the RAM and emits beeping sounds.",
+        "expected_ids": [
+          1
+        ],
+        "matches": [
+          {
+            "ticket_id": 1,
+            "similarity": 0.828031221777537,
+            "issue_description": "The computer beeps and the RAM is not detected.",
+            "resolution_summary": "Synthetic fixture: reseated a faulty RAM module; memory diagnostic passed.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          }
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true
+      },
+      {
+        "description": "BIOS cannot find the disk and it makes clicking sounds.",
+        "expected_ids": [
+          2
+        ],
+        "matches": [
+          {
+            "ticket_id": 2,
+            "similarity": 0.8361122185978467,
+            "issue_description": "Hard disk clicking and missing from BIOS.",
+            "resolution_summary": "Synthetic fixture: replaced a failing drive and verified detection.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          },
+          {
+            "ticket_id": 1,
+            "similarity": 0.5016877045791606,
+            "issue_description": "The computer beeps and the RAM is not detected.",
+            "resolution_summary": "Synthetic fixture: reseated a faulty RAM module; memory diagnostic passed.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          }
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true
+      },
+      {
+        "description": "The Windows update left this machine stuck in automatic recovery.",
+        "expected_ids": [
+          3
+        ],
+        "matches": [
+          {
+            "ticket_id": 3,
+            "similarity": 0.6419981314580182,
+            "issue_description": "Windows stuck in a boot repair loop after updating.",
+            "resolution_summary": "Synthetic fixture: rolled back the failed update and verified boot.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          }
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true
+      },
+      {
+        "description": "My spreadsheet program closes whenever I open a workbook.",
+        "expected_ids": [
+          4
+        ],
+        "matches": [
+          {
+            "ticket_id": 4,
+            "similarity": 0.7768260943596752,
+            "issue_description": "Spreadsheet application crashes when opening documents.",
+            "resolution_summary": "Synthetic fixture: repaired the application installation and tested documents.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          }
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true
+      },
+      {
+        "description": "This Ethernet computer is not receiving an address from DHCP.",
+        "expected_ids": [
+          5
+        ],
+        "matches": [
+          {
+            "ticket_id": 5,
+            "similarity": 0.8414181532585279,
+            "issue_description": "Ethernet is connected but DHCP does not issue an IP address.",
+            "resolution_summary": "Synthetic fixture: corrected the DHCP network configuration and verified connectivity.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          },
+          {
+            "ticket_id": 6,
+            "similarity": 0.6107681399467355,
+            "issue_description": "Computer cannot access network because of duplicate IP address.",
+            "resolution_summary": "Synthetic fixture: corrected duplicate addressing and verified gateway access.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          }
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true
+      },
+      {
+        "description": "Two computers have the same IP and network access fails.",
+        "expected_ids": [
+          6
+        ],
+        "matches": [
+          {
+            "ticket_id": 6,
+            "similarity": 0.8108808435653262,
+            "issue_description": "Computer cannot access network because of duplicate IP address.",
+            "resolution_summary": "Synthetic fixture: corrected duplicate addressing and verified gateway access.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          },
+          {
+            "ticket_id": 5,
+            "similarity": 0.47668888471640214,
+            "issue_description": "Ethernet is connected but DHCP does not issue an IP address.",
+            "resolution_summary": "Synthetic fixture: corrected the DHCP network configuration and verified connectivity.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          }
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true
+      },
+      {
+        "description": "The external keyboard has several dead keys.",
+        "expected_ids": [
+          7
+        ],
+        "matches": [
+          {
+            "ticket_id": 7,
+            "similarity": 0.7080086114824731,
+            "issue_description": "External keyboard keys do not respond.",
+            "resolution_summary": "Synthetic fixture: replaced the faulty keyboard and tested all keys.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          }
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true
+      },
+      {
+        "description": "Paper keeps getting stuck in the printer.",
+        "expected_ids": [
+          8
+        ],
+        "matches": [
+          {
+            "ticket_id": 8,
+            "similarity": 0.816142120474922,
+            "issue_description": "Printer paper is repeatedly jammed in the feed path.",
+            "resolution_summary": "Synthetic fixture: cleared the feed path under technician supervision and verified printing.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          }
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true
+      },
+      {
+        "description": "The UPS battery provides no backup when mains fails.",
+        "expected_ids": [
+          9
+        ],
+        "matches": [
+          {
+            "ticket_id": 9,
+            "similarity": 0.7676552781502376,
+            "issue_description": "UPS battery fails immediately during a mains power interruption.",
+            "resolution_summary": "Synthetic fixture: technician replaced the failed UPS battery and tested backup.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          }
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true
+      },
+      {
+        "description": "There is no electricity at the wall socket.",
+        "expected_ids": [
+          10
+        ],
+        "matches": [
+          {
+            "ticket_id": 10,
+            "similarity": 0.624775577383072,
+            "issue_description": "The wall outlet does not power any equipment.",
+            "resolution_summary": "Synthetic fixture: authorized electrical staff repaired the outlet and verified supply.",
+            "model_version": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "verified": true
+          }
+        ],
+        "hit_at_1": true,
+        "hit_at_3": true
+      }
+    ]
+  },
+  "classification_cases": [
+    {
+      "id": "synthetic-1",
+      "description": "The desktop beeps repeatedly and does not detect its RAM module.",
+      "expected_category": "Hardware Fault",
+      "category": null,
+      "score": 0.469830185174942,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Hardware Fault": 0.469830185174942,
+        "Peripheral Defect": 0.2589375078678131,
+        "Network and DHCP Connectivity": 0.0994563028216362,
+        "OS and Software Crash": 0.08992474526166916,
+        "Power Infrastructure": 0.08185118436813354
+      },
+      "request_id": "synthetic-1",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 627.8152000013506,
+      "http_latency_ms": 630.8997999985877
+    },
+    {
+      "id": "synthetic-2",
+      "description": "The hard drive makes clicking noises and is no longer detected in BIOS.",
+      "expected_category": "Hardware Fault",
+      "category": "Hardware Fault",
+      "score": 0.56609046459198,
+      "manual_triage_required": false,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Hardware Fault": 0.56609046459198,
+        "Peripheral Defect": 0.236729234457016,
+        "Network and DHCP Connectivity": 0.07173395901918411,
+        "Power Infrastructure": 0.06593390554189682,
+        "OS and Software Crash": 0.05951235815882683
+      },
+      "request_id": "synthetic-2",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 515.0842999973975,
+      "http_latency_ms": 517.3408999980893
+    },
+    {
+      "id": "synthetic-3",
+      "description": "The computer overheats and shuts down even though the room has normal power.",
+      "expected_category": "Hardware Fault",
+      "category": null,
+      "score": 0.39699774980545044,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Hardware Fault": 0.39699774980545044,
+        "Power Infrastructure": 0.30136263370513916,
+        "Peripheral Defect": 0.19101166725158691,
+        "Network and DHCP Connectivity": 0.06044110283255577,
+        "OS and Software Crash": 0.050186846405267715
+      },
+      "request_id": "synthetic-3",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 523.141099998611,
+      "http_latency_ms": 525.5075000022771
+    },
+    {
+      "id": "synthetic-4",
+      "description": "The motherboard cannot detect the installed memory after a hardware upgrade.",
+      "expected_category": "Hardware Fault",
+      "category": "Hardware Fault",
+      "score": 0.8992418646812439,
+      "manual_triage_required": false,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Hardware Fault": 0.8992418646812439,
+        "Peripheral Defect": 0.06780831515789032,
+        "Network and DHCP Connectivity": 0.014256431721150875,
+        "Power Infrastructure": 0.011439858935773373,
+        "OS and Software Crash": 0.0072535183280706406
+      },
+      "request_id": "synthetic-4",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 490.8867000012833,
+      "http_latency_ms": 493.4200999996392
+    },
+    {
+      "id": "synthetic-5",
+      "description": "Windows shows a blue screen every time the operating system starts.",
+      "expected_category": "OS and Software Crash",
+      "category": null,
+      "score": 0.24977938830852509,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "OS and Software Crash": 0.24977938830852509,
+        "Hardware Fault": 0.22252479195594788,
+        "Peripheral Defect": 0.2210719883441925,
+        "Network and DHCP Connectivity": 0.18664976954460144,
+        "Power Infrastructure": 0.11997407674789429
+      },
+      "request_id": "synthetic-5",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 497.42690000130096,
+      "http_latency_ms": 500.18849999833037
+    },
+    {
+      "id": "synthetic-6",
+      "description": "The spreadsheet application crashes immediately after opening a document.",
+      "expected_category": "OS and Software Crash",
+      "category": null,
+      "score": 0.26583486795425415,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "OS and Software Crash": 0.26583486795425415,
+        "Peripheral Defect": 0.2552894055843353,
+        "Hardware Fault": 0.2203868180513382,
+        "Network and DHCP Connectivity": 0.13648302853107452,
+        "Power Infrastructure": 0.1220058798789978
+      },
+      "request_id": "synthetic-6",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 481.20749999725376,
+      "http_latency_ms": 483.8908999990963
+    },
+    {
+      "id": "synthetic-7",
+      "description": "Windows is stuck in an automatic repair loop after an update.",
+      "expected_category": "OS and Software Crash",
+      "category": null,
+      "score": 0.24495188891887665,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Hardware Fault": 0.24495188891887665,
+        "Peripheral Defect": 0.23455828428268433,
+        "Network and DHCP Connectivity": 0.20846432447433472,
+        "OS and Software Crash": 0.20411181449890137,
+        "Power Infrastructure": 0.10791371762752533
+      },
+      "request_id": "synthetic-7",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 489.7388999997929,
+      "http_latency_ms": 492.2831000003498
+    },
+    {
+      "id": "synthetic-8",
+      "description": "The installed operating system freezes when users log in.",
+      "expected_category": "OS and Software Crash",
+      "category": null,
+      "score": 0.31126677989959717,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "OS and Software Crash": 0.31126677989959717,
+        "Hardware Fault": 0.2302669733762741,
+        "Peripheral Defect": 0.18480347096920013,
+        "Power Infrastructure": 0.14219364523887634,
+        "Network and DHCP Connectivity": 0.13146911561489105
+      },
+      "request_id": "synthetic-8",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 478.96469999977853,
+      "http_latency_ms": 481.57219999848166
+    },
+    {
+      "id": "synthetic-9",
+      "description": "The Ethernet cable is connected but DHCP does not assign an IP address.",
+      "expected_category": "Network and DHCP Connectivity",
+      "category": "Network and DHCP Connectivity",
+      "score": 0.8525035977363586,
+      "manual_triage_required": false,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Network and DHCP Connectivity": 0.8525035977363586,
+        "Peripheral Defect": 0.06878209859132767,
+        "Hardware Fault": 0.03680103272199631,
+        "Power Infrastructure": 0.029828891158103943,
+        "OS and Software Crash": 0.012084373272955418
+      },
+      "request_id": "synthetic-9",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 508.37630000023637,
+      "http_latency_ms": 510.8626000001095
+    },
+    {
+      "id": "synthetic-10",
+      "description": "Computers in the lab cannot reach the network gateway.",
+      "expected_category": "Network and DHCP Connectivity",
+      "category": "Network and DHCP Connectivity",
+      "score": 0.5396857261657715,
+      "manual_triage_required": false,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Network and DHCP Connectivity": 0.5396857261657715,
+        "Peripheral Defect": 0.1924348622560501,
+        "Hardware Fault": 0.1643790751695633,
+        "Power Infrastructure": 0.05876298248767853,
+        "OS and Software Crash": 0.044737301766872406
+      },
+      "request_id": "synthetic-10",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 511.2560999987181,
+      "http_latency_ms": 513.6712000021362
+    },
+    {
+      "id": "synthetic-11",
+      "description": "The computer reports an IP address conflict and cannot access the campus network.",
+      "expected_category": "Network and DHCP Connectivity",
+      "category": "Network and DHCP Connectivity",
+      "score": 0.5390527248382568,
+      "manual_triage_required": false,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Network and DHCP Connectivity": 0.5390527248382568,
+        "Hardware Fault": 0.1564929038286209,
+        "Peripheral Defect": 0.14041683077812195,
+        "OS and Software Crash": 0.08381122350692749,
+        "Power Infrastructure": 0.08022641390562057
+      },
+      "request_id": "synthetic-11",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 532.8950000002806,
+      "http_latency_ms": 535.5706999980612
+    },
+    {
+      "id": "synthetic-12",
+      "description": "The network adapter connects to Wi-Fi but cannot obtain a valid IP address.",
+      "expected_category": "Network and DHCP Connectivity",
+      "category": "Network and DHCP Connectivity",
+      "score": 0.8238266706466675,
+      "manual_triage_required": false,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Network and DHCP Connectivity": 0.8238266706466675,
+        "Peripheral Defect": 0.07887748628854752,
+        "Hardware Fault": 0.0704582929611206,
+        "Power Infrastructure": 0.01419923733919859,
+        "OS and Software Crash": 0.012638331390917301
+      },
+      "request_id": "synthetic-12",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 556.3531999978295,
+      "http_latency_ms": 559.1055999975652
+    },
+    {
+      "id": "synthetic-13",
+      "description": "Several keys on the external keyboard no longer respond.",
+      "expected_category": "Peripheral Defect",
+      "category": null,
+      "score": 0.3872395157814026,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Hardware Fault": 0.3872395157814026,
+        "Peripheral Defect": 0.3136599659919739,
+        "Network and DHCP Connectivity": 0.11216177046298981,
+        "Power Infrastructure": 0.11010238528251648,
+        "OS and Software Crash": 0.07683636993169785
+      },
+      "request_id": "synthetic-13",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 487.27040000085253,
+      "http_latency_ms": 489.94520000269404
+    },
+    {
+      "id": "synthetic-14",
+      "description": "The USB mouse cursor jumps erratically when the mouse is moved.",
+      "expected_category": "Peripheral Defect",
+      "category": null,
+      "score": 0.36210396885871887,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Hardware Fault": 0.36210396885871887,
+        "Peripheral Defect": 0.32991716265678406,
+        "Network and DHCP Connectivity": 0.16376912593841553,
+        "Power Infrastructure": 0.08516846597194672,
+        "OS and Software Crash": 0.05904128775000572
+      },
+      "request_id": "synthetic-14",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 503.56789999932516,
+      "http_latency_ms": 506.1098000005586
+    },
+    {
+      "id": "synthetic-15",
+      "description": "The laboratory printer repeatedly jams paper while printing.",
+      "expected_category": "Peripheral Defect",
+      "category": null,
+      "score": 0.44959184527397156,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Hardware Fault": 0.44959184527397156,
+        "Peripheral Defect": 0.3266940712928772,
+        "Network and DHCP Connectivity": 0.08746069669723511,
+        "Power Infrastructure": 0.0823810026049614,
+        "OS and Software Crash": 0.05387231335043907
+      },
+      "request_id": "synthetic-15",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 464.1546000020753,
+      "http_latency_ms": 466.78849999807426
+    },
+    {
+      "id": "synthetic-16",
+      "description": "The external webcam is not detected when connected to a working USB port.",
+      "expected_category": "Peripheral Defect",
+      "category": null,
+      "score": 0.334263414144516,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Hardware Fault": 0.334263414144516,
+        "Peripheral Defect": 0.31935498118400574,
+        "Network and DHCP Connectivity": 0.18480944633483887,
+        "Power Infrastructure": 0.0926600992679596,
+        "OS and Software Crash": 0.06891205906867981
+      },
+      "request_id": "synthetic-16",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 512.196200001199,
+      "http_latency_ms": 514.5382000009704
+    },
+    {
+      "id": "synthetic-17",
+      "description": "The UPS turns off immediately when mains electricity is interrupted.",
+      "expected_category": "Power Infrastructure",
+      "category": "Power Infrastructure",
+      "score": 0.8452174663543701,
+      "manual_triage_required": false,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Power Infrastructure": 0.8452174663543701,
+        "Peripheral Defect": 0.05736231058835983,
+        "Hardware Fault": 0.05571046471595764,
+        "Network and DHCP Connectivity": 0.02972107194364071,
+        "OS and Software Crash": 0.011988709680736065
+      },
+      "request_id": "synthetic-17",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 490.8133999997517,
+      "http_latency_ms": 493.59610000101384
+    },
+    {
+      "id": "synthetic-18",
+      "description": "The lab circuit breaker trips when the equipment is switched on.",
+      "expected_category": "Power Infrastructure",
+      "category": null,
+      "score": 0.3717585504055023,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Power Infrastructure": 0.3717585504055023,
+        "Hardware Fault": 0.3004736304283142,
+        "Peripheral Defect": 0.1831747442483902,
+        "Network and DHCP Connectivity": 0.11241676658391953,
+        "OS and Software Crash": 0.032176293432712555
+      },
+      "request_id": "synthetic-18",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 494.5475999993505,
+      "http_latency_ms": 497.13250000058906
+    },
+    {
+      "id": "synthetic-19",
+      "description": "The wall power outlet does not supply electricity to any device.",
+      "expected_category": "Power Infrastructure",
+      "category": "Power Infrastructure",
+      "score": 0.5606051087379456,
+      "manual_triage_required": false,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Power Infrastructure": 0.5606051087379456,
+        "Peripheral Defect": 0.2079811990261078,
+        "Hardware Fault": 0.12712980806827545,
+        "Network and DHCP Connectivity": 0.06488152593374252,
+        "OS and Software Crash": 0.0394023172557354
+      },
+      "request_id": "synthetic-19",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 493.1397000000288,
+      "http_latency_ms": 495.84219999815105
+    },
+    {
+      "id": "synthetic-20",
+      "description": "Sparks and a burning smell are coming from the power strip.",
+      "expected_category": "Power Infrastructure",
+      "category": "Power Infrastructure",
+      "score": 0.8767871856689453,
+      "manual_triage_required": true,
+      "priority_suggestion": "Critical",
+      "safety_escalation_required": true,
+      "candidate_scores": {
+        "Power Infrastructure": 0.8767871856689453,
+        "Hardware Fault": 0.05279412120580673,
+        "Peripheral Defect": 0.04499804601073265,
+        "Network and DHCP Connectivity": 0.018601035699248314,
+        "OS and Software Crash": 0.006819669157266617
+      },
+      "request_id": "synthetic-20",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 513.5980999984895,
+      "http_latency_ms": 516.371400000935
+    },
+    {
+      "id": "synthetic-21",
+      "description": "It is broken.",
+      "expected_category": null,
+      "category": null,
+      "score": 0.0,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {},
+      "request_id": "synthetic-21",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 0.016100002540042624,
+      "http_latency_ms": 2.162500000849832
+    },
+    {
+      "id": "synthetic-22",
+      "description": "The computer is not working properly.",
+      "expected_category": null,
+      "category": "Hardware Fault",
+      "score": 0.7017636895179749,
+      "manual_triage_required": false,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Hardware Fault": 0.7017636895179749,
+        "Peripheral Defect": 0.17684295773506165,
+        "OS and Software Crash": 0.061023227870464325,
+        "Network and DHCP Connectivity": 0.03815855085849762,
+        "Power Infrastructure": 0.022211534902453423
+      },
+      "request_id": "synthetic-22",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 459.08260000214796,
+      "http_latency_ms": 461.5979999980482
+    },
+    {
+      "id": "synthetic-23",
+      "description": "Please help me with this device.",
+      "expected_category": null,
+      "category": null,
+      "score": 0.40687739849090576,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {
+        "Hardware Fault": 0.40687739849090576,
+        "Peripheral Defect": 0.2453014999628067,
+        "Network and DHCP Connectivity": 0.13425475358963013,
+        "Power Infrastructure": 0.1144149899482727,
+        "OS and Software Crash": 0.09915134310722351
+      },
+      "request_id": "synthetic-23",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 454.86349999919184,
+      "http_latency_ms": 457.4678999997559
+    },
+    {
+      "id": "synthetic-24",
+      "description": "bad",
+      "expected_category": null,
+      "category": null,
+      "score": 0.0,
+      "manual_triage_required": true,
+      "priority_suggestion": "Medium",
+      "safety_escalation_required": false,
+      "candidate_scores": {},
+      "request_id": "synthetic-24",
+      "model_version": "valhalla/distilbart-mnli-12-3@ef9a58ce6a9cd44cd0d4c2f7db1cd67f81019a8b",
+      "taxonomy_version": "it-faults-v1",
+      "duration_ms": 0.017000002117129043,
+      "http_latency_ms": 2.28870000137249
+    }
+  ],
+  "limitations": [
+    "Small synthetic development fixtures; no institutional or human-reviewed accuracy claim.",
+    "English models; storing Unicode does not establish multilingual classification quality.",
+    "Confidence scores are not calibrated probabilities; 0.50 and 0.45 remain prototype thresholds.",
+    "Priority is an explicit conservative policy; safety keyword false positives require human review.",
+    "Historical recommendations are suggestions; no organization-vetted SOP content was supplied.",
+    "No INT8 quantization is implemented or claimed."
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "source": "Synthetic prototype fixtures authored during implementation; not institutional repair history.",
+  "human_reviewed": false,
+  "samples": [
+    {
+      "id": "synthetic-1",
+      "description": "The desktop beeps repeatedly and does not detect its RAM module.",
+      "expected_category": "Hardware Fault"
+    },
+    {
+      "id": "synthetic-2",
+      "description": "The hard drive makes clicking noises and is no longer detected in BIOS.",
+      "expected_category": "Hardware Fault"
+    },
+    {
+      "id": "synthetic-3",
+      "description": "The computer overheats and shuts down even though the room has normal power.",
+      "expected_category": "Hardware Fault"
+    },
+    {
+      "id": "synthetic-4",
+      "description": "The motherboard cannot detect the installed memory after a hardware upgrade.",
+      "expected_category": "Hardware Fault"
+    },
+    {
+      "id": "synthetic-5",
+      "description": "Windows shows a blue screen every time the operating system starts.",
+      "expected_category": "OS and Software Crash"
+    },
+    {
+      "id": "synthetic-6",
+      "description": "The spreadsheet application crashes immediately after opening a document.",
+      "expected_category": "OS and Software Crash"
+    },
+    {
+      "id": "synthetic-7",
+      "description": "Windows is stuck in an automatic repair loop after an update.",
+      "expected_category": "OS and Software Crash"
+    },
+    {
+      "id": "synthetic-8",
+      "description": "The installed operating system freezes when users log in.",
+      "expected_category": "OS and Software Crash"
+    },
+    {
+      "id": "synthetic-9",
+      "description": "The Ethernet cable is connected but DHCP does not assign an IP address.",
+      "expected_category": "Network and DHCP Connectivity"
+    },
+    {
+      "id": "synthetic-10",
+      "description": "Computers in the lab cannot reach the network gateway.",
+      "expected_category": "Network and DHCP Connectivity"
+    },
+    {
+      "id": "synthetic-11",
+      "description": "The computer reports an IP address conflict and cannot access the campus network.",
+      "expected_category": "Network and DHCP Connectivity"
+    },
+    {
+      "id": "synthetic-12",
+      "description": "The network adapter connects to Wi-Fi but cannot obtain a valid IP address.",
+      "expected_category": "Network and DHCP Connectivity"
+    },
+    {
+      "id": "synthetic-13",
+      "description": "Several keys on the external keyboard no longer respond.",
+      "expected_category": "Peripheral Defect"
+    },
+    {
+      "id": "synthetic-14",
+      "description": "The USB mouse cursor jumps erratically when the mouse is moved.",
+      "expected_category": "Peripheral Defect"
+    },
+    {
+      "id": "synthetic-15",
+      "description": "The laboratory printer repeatedly jams paper while printing.",
+      "expected_category": "Peripheral Defect"
+    },
+    {
+      "id": "synthetic-16",
+      "description": "The external webcam is not detected when connected to a working USB port.",
+      "expected_category": "Peripheral Defect"
+    },
+    {
+      "id": "synthetic-17",
+      "description": "The UPS turns off immediately when mains electricity is interrupted.",
+      "expected_category": "Power Infrastructure"
+    },
+    {
+      "id": "synthetic-18",
+      "description": "The lab circuit breaker trips when the equipment is switched on.",
+      "expected_category": "Power Infrastructure"
+    },
+    {
+      "id": "synthetic-19",
+      "description": "The wall power outlet does not supply electricity to any device.",
+      "expected_category": "Power Infrastructure"
+    },
+    {
+      "id": "synthetic-20",
+      "description": "Sparks and a burning smell are coming from the power strip.",
+      "expected_category": "Power Infrastructure"
+    },
+    {
+      "id": "synthetic-21",
+      "description": "It is broken.",
+      "expected_category": null
+    },
+    {
+      "id": "synthetic-22",
+      "description": "The computer is not working properly.",
+      "expected_category": null
+    },
+    {
+      "id": "synthetic-23",
+      "description": "Please help me with this device.",
+      "expected_category": null
+    },
+    {
+      "id": "synthetic-24",
+      "description": "bad",
+      "expected_category": null
+    }
+  ],
+  "repairs": [
+    {
+      "id": 1,
+      "issue": "The computer beeps and the RAM is not detected.",
+      "resolution": "Synthetic fixture: reseated a faulty RAM module; memory diagnostic passed."
+    },
+    {
+      "id": 2,
+      "issue": "Hard disk clicking and missing from BIOS.",
+      "resolution": "Synthetic fixture: replaced a failing drive and verified detection."
+    },
+    {
+      "id": 3,
+      "issue": "Windows stuck in a boot repair loop after updating.",
+      "resolution": "Synthetic fixture: rolled back the failed update and verified boot."
+    },
+    {
+      "id": 4,
+      "issue": "Spreadsheet application crashes when opening documents.",
+      "resolution": "Synthetic fixture: repaired the application installation and tested documents."
+    },
+    {
+      "id": 5,
+      "issue": "Ethernet is connected but DHCP does not issue an IP address.",
+      "resolution": "Synthetic fixture: corrected the DHCP network configuration and verified connectivity."
+    },
+    {
+      "id": 6,
+      "issue": "Computer cannot access network because of duplicate IP address.",
+      "resolution": "Synthetic fixture: corrected duplicate addressing and verified gateway access."
+    },
+    {
+      "id": 7,
+      "issue": "External keyboard keys do not respond.",
+      "resolution": "Synthetic fixture: replaced the faulty keyboard and tested all keys."
+    },
+    {
+      "id": 8,
+      "issue": "Printer paper is repeatedly jammed in the feed path.",
+      "resolution": "Synthetic fixture: cleared the feed path under technician supervision and verified printing."
+    },
+    {
+      "id": 9,
+      "issue": "UPS battery fails immediately during a mains power interruption.",
+      "resolution": "Synthetic fixture: technician replaced the failed UPS battery and tested backup."
+    },
+    {
+      "id": 10,
+      "issue": "The wall outlet does not power any equipment.",
+      "resolution": "Synthetic fixture: authorized electrical staff repaired the outlet and verified supply."
+    }
+  ],
+  "retrieval_queries": [
+    {
+      "description": "The PC cannot see the RAM and emits beeping sounds.",
+      "expected_ids": [
+        1
+      ]
+    },
+    {
+      "description": "BIOS cannot find the disk and it makes clicking sounds.",
+      "expected_ids": [
+        2
+      ]
+    },
+    {
+      "description": "The Windows update left this machine stuck in automatic recovery.",
+      "expected_ids": [
+        3
+      ]
+    },
+    {
+      "description": "My spreadsheet program closes whenever I open a workbook.",
+      "expected_ids": [
+        4
+      ]
+    },
+    {
+      "description": "This Ethernet computer is not receiving an address from DHCP.",
+      "expected_ids": [
+        5
+      ]
+    },
+    {
+      "description": "Two computers have the same IP and network access fails.",
+      "expected_ids": [
+        6
+      ]
+    },
+    {
+      "description": "The external keyboard has several dead keys.",
+      "expected_ids": [
+        7
+      ]
+    },
+    {
+      "description": "Paper keeps getting stuck in the printer.",
+      "expected_ids": [
+        8
+      ]
+    },
+    {
+      "description": "The UPS battery provides no backup when mains fails.",
+      "expected_ids": [
+        9
+      ]
+    },
+    {
+      "description": "There is no electricity at the wall socket.",
+      "expected_ids": [
+        10
+      ]
+    }
+  ]
+}
